@@ -4,7 +4,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 
-def january(request):
+def january(request) -> HttpResponse:
     """
     This function is a view that handles the HTTP GET request to the home page.
     It returns an HTTP response to the client.
@@ -21,8 +21,10 @@ def january(request):
     # that the client expects.
     return HttpResponse("Read Quran every day in January!")
 
-def february(request):
+
+def february(request) -> HttpResponse:
     return HttpResponse("Walk for atleast 5km in february!")
 
-def march(request):
+
+def march(request) -> HttpResponse:
     return HttpResponse("Read Hadees every day in march!")
