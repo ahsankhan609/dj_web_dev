@@ -21,3 +21,7 @@ django-admoin startproject myproject .
 ## Understnading Data, Models & Relationships
 
 ## Deployment with Postgres
+
+## Acknowledgements
+
+- [Academiand](https://academind.com/) - Max Schwarzmüller

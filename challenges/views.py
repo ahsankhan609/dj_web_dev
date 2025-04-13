@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 
 # Create your views here.
 
 
-def january(request) -> HttpResponse:
+def january(request: HttpRequest) -> HttpResponse:
     """
     This function is a view that handles the HTTP GET request to the home page.
     It returns an HTTP response to the client.
@@ -22,9 +22,9 @@ def january(request) -> HttpResponse:
     return HttpResponse("Read Quran every day in January!")
 
 
-def february(request) -> HttpResponse:
+def february(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Walk for atleast 5km in february!")
 
 
-def march(request) -> HttpResponse:
+def march(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Read Hadees every day in march!")
