@@ -23,7 +23,7 @@ def january(request: HttpRequest) -> HttpResponse:
 
 
 def february(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("Walk for atleast 5km in february!")
+    return HttpResponse("Walk for at least 5km in February!")
 
 
 def march(request: HttpRequest) -> HttpResponse:
