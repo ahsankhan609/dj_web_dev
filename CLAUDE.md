@@ -9,6 +9,9 @@ A Django learning project following the Udemy course "Python Django - The Practi
 ## Commands
 
 ```bash
+# Install dependencies (first time setup)
+uv sync
+
 # Run development server
 uv run python manage.py runserver
 
