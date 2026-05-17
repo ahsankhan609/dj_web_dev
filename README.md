@@ -12,7 +12,13 @@
 uv pip install -r requirements.txt
 ```
 ```Bash
-django-admin startproject myproject .
+uv run django-admin startproject myproject .
+```
+
+## Running Local Development Server locally
+
+```bash
+uv run manage.py runserver
 ```
 
 ## Understanding URLs, Routes and Views
