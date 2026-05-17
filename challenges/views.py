@@ -1,4 +1,5 @@
-from django.http import HttpResponse, HttpRequest, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, Http404
+from django.shortcuts import render
 from django.urls import reverse
 
 monthly_challenges: dict[int, str] = {
@@ -32,15 +33,32 @@ _month_name_to_number: dict[str, int] = {
 }
 
 
+def index(request: HttpRequest) -> HttpResponse:
+    try:
+        return render(request, "challenges/index.html", {"challenges": monthly_challenges})
+    except Exception:
+        raise Http404("Something went wrong loading the challenges index.")
+
+
 def monthly_challenge_by_number(request: HttpRequest, month: int) -> HttpResponse:
-    challenge = monthly_challenges.get(month)
-    if challenge is None:
-        return HttpResponseNotFound(f"<h1>Month {month!r} is invalid. Enter a number between 1 and 12.</h1>")
-    return HttpResponse(f"<h1>{challenge}</h1>")
+    try:
+        challenge = monthly_challenges.get(month)
+        if challenge is None:
+            raise Http404(f"Month {month!r} is invalid. Enter a number between 1 and 12.")
+        return HttpResponse(f"<h1>{challenge}</h1>")
+    except Http404:
+        raise
+    except Exception:
+        raise Http404("Something went wrong loading the challenge.")
 
 
 def monthly_challenge(request: HttpRequest, month: str) -> HttpResponse:
-    month_number = _month_name_to_number.get(month.lower())
-    if month_number is None:
-        return HttpResponseNotFound(f"<h1>{month!r} is not a valid month name.</h1>")
-    return HttpResponseRedirect(reverse("challenges:month-by-number", args=[month_number]))
+    try:
+        month_number = _month_name_to_number.get(month.lower())
+        if month_number is None:
+            raise Http404(f"{month!r} is not a valid month name.")
+        return HttpResponseRedirect(reverse("challenges:month-by-number", args=[month_number]))
+    except Http404:
+        raise
+    except Exception:
+        raise Http404("Something went wrong resolving the month.")

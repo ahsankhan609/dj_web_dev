@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}All Monthly Challenges{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Monthly Challenges</h1>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for month_number, challenge in challenges.items %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'challenges:month-by-number' month_number %}" class="text-decoration-none">
+                        Month {{ month_number }}
+                    </a>
+                </h5>
+                <p class="card-text text-muted">{{ challenge }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'challenges:month-by-number' month_number %}" class="btn btn-sm btn-outline-primary">
+                    View Challenge
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
