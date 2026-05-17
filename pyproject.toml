@@ -1,7 +1,7 @@
 [project]
 name = "dj-web-dev"
 version = "0.1.0"
-description = "Add your description here"
+description = "Django learning project following Udemy - Python Django: The Practical Guide"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -9,3 +9,6 @@ dependencies = [
     "pillow>=12.2.0",
     "python-dotenv>=1.2.2",
 ]
+
+[tool.django]
+settings_module = "main.settings"
