@@ -20,15 +20,3 @@ uv run django-admin startproject myproject .
 ```bash
 uv run manage.py runserver
 ```
-
-## Understanding URLs, Routes and Views
-
-### Class based Views
-
-## Understanding Templates & Static Files
-
-## Understanding Data, Models & Relationships
-
-## Deployment with Postgres
-
-## Acknowledgements
