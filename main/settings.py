@@ -80,12 +80,39 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES: dict[str, dict[str, Any]] = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DB_ENGINE = os.environ.get('DB_ENGINE', 'sqlite3').lower()
+
+if DB_ENGINE == 'mysql':
+    required_mysql_vars = ['DB_NAME', 'DB_USER']
+    missing_mysql_vars = [
+        key for key in required_mysql_vars if not os.environ.get(key)]
+    if missing_mysql_vars:
+        missing_vars_str = ', '.join(missing_mysql_vars)
+        raise RuntimeError(
+            f"Missing required MySQL environment variable(s): {missing_vars_str}. "
+            "Set them in your .env file."
+        )
+
+    DATABASES: dict[str, dict[str, Any]] = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ['DB_NAME'],
+            'USER': os.environ['DB_USER'],
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+            'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+            'PORT': os.environ.get('DB_PORT', '3306'),
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+            },
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
