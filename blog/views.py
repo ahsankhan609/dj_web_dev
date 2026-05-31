@@ -65,7 +65,6 @@ def post_detail(request: HttpRequest, slug: str) -> HttpResponse:
         raise Http404("Post not found")
     return render(request, 'blog/post_detail.html', context={
         'title': post['title'],
-        'heading': post['title'],
         'description': post['content'],
         'content': post['content'],
         'created_at': post['created_at'],
