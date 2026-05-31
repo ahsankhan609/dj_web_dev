@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>{{ heading }}</h1>
+<p>{{ description }}</p>
+<a href="{% url 'blog:post-list' %}">View Posts</a>
+{% endblock %}

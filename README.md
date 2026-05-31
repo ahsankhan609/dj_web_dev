@@ -8,31 +8,57 @@
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/)
 
-## Setup
+## Setup Project
 
 ```bash
 # Install dependencies
 uv sync
 
-# Copy environment file and fill in values
+# Add a new dependency
+uv add <package_name>
+
+# Copy environment file and fill in values(Windows)
+Copy-Item .env.example .env
+
+# Copy environment file and fill in values(Linux)
+cp .env.example .env
+
+# Copy environment file and fill in values(MacOS)
 cp .env.example .env
 ```
 
 ## Running the Development Server
 
 ```bash
-uv run python manage.py runserver
+uv run py manage.py runserver
 ```
 
-## Other Commands
+## Database
 
 ```bash
 # Apply migrations
-uv run python manage.py migrate
+uv run py manage.py migrate
+```
 
+## Testing the Application
+
+```bash
 # Run tests
-uv run python manage.py test
+uv run py manage.py test
+```
 
-# Add a new dependency
-uv add <package>
+## Quality Checks
+
+```bash
+# Run Ruff linter
+uv run ruff check
+```
+
+```bash
+# Run Ruff formatter
+uv run ruff format
+```
+
+```bash
+uv run pyright
 ```

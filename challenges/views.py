@@ -44,7 +44,8 @@ def monthly_challenge_by_number(request: HttpRequest, month: int) -> HttpRespons
     try:
         challenge = monthly_challenges.get(month)
         if challenge is None:
-            raise Http404(f"Month {month!r} is invalid. Enter a number between 1 and 12.")
+            raise Http404(
+                f"Month {month!r} is invalid. Enter a number between 1 and 12.")
         return HttpResponse(f"<h1>{challenge}</h1>")
     except Http404:
         raise

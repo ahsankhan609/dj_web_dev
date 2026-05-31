@@ -12,3 +12,38 @@ dependencies = [
 
 [tool.django]
 settings_module = "main.settings"
+
+[dependency-groups]
+dev = [
+    "django-stubs>=6.0.5",
+    "pyright>=1.1.409",
+    "ruff>=0.15.15",
+]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+typeCheckingMode = "standard" # later: strict
+reportMissingTypeStubs = "warning"
+exclude = [".venv","**/__pycache__/**", "**/migrations/**", "**/staticfiles/**"]
+
+[tool.django-stubs]
+django_settings_module = "main.settings"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+exclude = [".venv","**/__pycache__/**", "**/migrations/**", "**/staticfiles/**"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "C4", "DJ"]
+# Optional later if you want stronger typing discipline:
+# extend-select = ["ANN"]
+
+[tool.ruff.lint.per-file-ignores]
+"manage.py" = ["E402"]
+"**/migrations/*.py" = ["E501"]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"

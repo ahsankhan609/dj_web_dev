@@ -42,6 +42,7 @@ INSTALLED_APPS: list[str] = [
 
     # internal Apps
     'challenges',
+    'blog',
 ]
 
 MIDDLEWARE: list[str] = [
@@ -67,6 +68,7 @@ TEMPLATES: list[dict[str, Any]] = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.app_navigation',
             ],
         },
     },

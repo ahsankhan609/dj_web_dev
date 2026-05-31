@@ -4,5 +4,26 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"cSpell.words": [
+			"april",
+			"claude",
+			"december",
+			"django",
+			"dotenv",
+			"february",
+			"Hadees",
+			"january",
+			"july",
+			"june",
+			"november",
+			"october",
+			"pycache",
+			"pyright",
+			"runserver",
+			"september",
+			"staticfiles",
+			"venv"
+		]
+	}
 }

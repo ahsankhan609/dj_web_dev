@@ -15,7 +15,17 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'challenges:index' %}">Monthly Challenges</a>
+            <a class="navbar-brand" href="{% if app_links %}{{ app_links.0.url }}{% else %}#{% endif %}">
+                Django Apps
+            </a>
+            <div class="navbar-nav">
+                {% for app in app_links %}
+                    <a class="nav-link{% if request.resolver_match.namespace == app.namespace %} active{% endif %}"
+                       href="{{ app.url }}">
+                        {{ app.name }}
+                    </a>
+                {% endfor %}
+            </div>
         </div>
     </nav>
 

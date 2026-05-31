@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>{{ heading }}</h1>
+<p>{{ content }}</p>
+<p>Created at: {{ created_at }}</p>
+<p>Updated at: {{ updated_at }}</p>
+<a href="{% url 'blog:post-list' %}">Back to Posts</a>
+{% endblock %}
