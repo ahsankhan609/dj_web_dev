@@ -1,72 +1,57 @@
-from django.http import HttpRequest, HttpResponse
-from django.http import Http404
-from django.shortcuts import render
+from django.views.generic import DetailView, ListView, TemplateView
 
-# List of all posts
-# Each post is a dictionary with the following keys:
-# - title: str
-# - slug: str
-# - content: str
-# - created_at: str
-# - updated_at: str
-POSTS: list[dict[str, str]] = [
-    {
-        'title': 'Post 1',
-        'slug': 'post-1',
-        'content': 'This is the content of the first post.',
-        'created_at': '2021-01-01',
-        'updated_at': '2021-01-01',
-    },
-    {
-        'title': 'Post 2',
-        'slug': 'post-2',
-        'content': 'This is the content of the second post.',
-        'created_at': '2021-01-01',
-        'updated_at': '2021-01-01',
-    },
-    {
-        'title': 'Post 3',
-        'slug': 'post-3',
-        'content': 'This is the content of the third post.',
-        'created_at': '2021-01-01',
-        'updated_at': '2021-01-01',
-    },
-    {
-        'title': 'Post 4',
-        'slug': 'post-4',
-        'content': 'This is the content of the fourth post.',
-        'created_at': '2021-01-01',
-        'updated_at': '2021-01-01',
-    },
-]
+from .models import Post
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    context = {
-        'title': 'Blog Homepage',
-        'heading': 'Welcome to the Blog',
-        'description': 'This is the home page of the blog. Here you can find all the latest posts and updates.',
-    }
-    return render(request, 'blog/index.html', context=context)
+class BlogIndexView(TemplateView):
+    template_name = 'blog/index.html'
+
+    def get_context_data(self, **kwargs: object) -> dict[str, object]:
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Blog Homepage'
+        context['heading'] = 'Welcome to the Blog'
+        context['description'] = (
+            'This is the home page of the blog. '
+            'Here you can find all the latest posts and updates.'
+        )
+        return context
 
 
-def post_list(request: HttpRequest) -> HttpResponse:
-    return render(request, 'blog/post_list.html', context={
-        'title': 'Blog Posts',
-        'heading': 'Blog Posts',
-        'description': 'This is the list of all the blog posts.',
-        'posts': POSTS,
-    })
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+    queryset = (
+        Post.objects.filter(status=Post.Status.PUBLISHED)
+        .select_related('author__user')
+        .prefetch_related('tags')
+        .order_by('-created_on')
+    )
+
+    def get_context_data(self, **kwargs: object) -> dict[str, object]:
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Blog Posts'
+        context['heading'] = 'Blog Posts'
+        context['description'] = 'This is the list of all the blog posts.'
+        return context
 
 
-def post_detail(request: HttpRequest, slug: str) -> HttpResponse:
-    post = next((post for post in POSTS if post['slug'] == slug), None)
-    if post is None:
-        raise Http404("Post not found")
-    return render(request, 'blog/post_detail.html', context={
-        'title': post['title'],
-        'description': post['content'],
-        'content': post['content'],
-        'created_at': post['created_at'],
-        'updated_at': post['updated_at'],
-    })
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+    context_object_name = 'post'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
+    def get_context_data(self, **kwargs: object) -> dict[str, object]:
+        context = super().get_context_data(**kwargs)
+        post: Post = self.object  # type: ignore[assignment]
+        if post.author is not None:
+            context['related_posts'] = (
+                post.author.posts.filter(status=Post.Status.PUBLISHED)
+                .exclude(pk=post.pk)
+                .order_by('-created_on')[:5]
+            )
+        else:
+            context['related_posts'] = Post.objects.none()
+        return context
