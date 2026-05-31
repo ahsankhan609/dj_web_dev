@@ -17,9 +17,19 @@ settings_module = "main.settings"
 [dependency-groups]
 dev = [
     "django-stubs>=6.0.5",
+    "factory-boy>=3.3.3",
+    "pytest>=9.0.3",
+    "pytest-django>=4.11.1",
     "pyright>=1.1.409",
     "ruff>=0.15.15",
 ]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = 'main.settings'
+python_files = ['test_*.py']
+python_classes = ['Test*']
+python_functions = ['test_*']
+addopts = ['-v', '--strict-markers']
 
 [tool.pyright]
 venvPath = "."

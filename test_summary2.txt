@@ -1,0 +1,10 @@
+============================================== warnings summary =============================================== 
+blog/tests/test_models.py: 8 warnings
+blog/tests/test_views.py: 7 warnings
+  C:\Users\AhsanKhan\Documents\PycharmProjects\dj_web_dev\.venv\Lib\site-packages\factory\django.py:182: DeprecationWarning: PostFactory._after_postgeneration will stop saving the instance after postgeneration hooks in the next major release.
+  If the save call is extraneous, set skip_postgeneration_save=True in the PostFactory.Meta.
+  To keep saving the instance, move the save call to your postgeneration hooks or override _after_postgeneration.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================================= 31 passed, 15 warnings in 9.08s =======================================
